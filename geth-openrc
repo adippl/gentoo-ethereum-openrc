@@ -1,0 +1,25 @@
+#!/sbin/openrc-run
+
+GETH_NAME=${SVCNAME##*.}
+name="geth daemon for user $GETH_NAME"
+description="Ethereum daemon for user $GETH_NAME"
+command="/usr/bin/geth"
+command_args="--syncmode light --datadir /home/$GETH_NAME/.local/share/ethereum"
+
+depend() {
+	need net
+	use dns
+}
+
+start(){
+	ebegin "Starting $GETH_NAME's Ethereum daemon"
+	touch /var/log/geth/$SVCNAME.log
+	chown $GETH_NAME:root /var/log/geth/$SVCNAME.log
+	start-stop-daemon --start --user $GETH_NAME --exec $command --name $SVCNAME --make-pidfile --pidfile /run/$SVCNAME.pid --background --stderr /var/log/geth/$SVCNAME.log -- $command_args
+	}
+
+stop(){
+	ebegin "Stopping $GETH_NAME's Ethereum daemon"
+	start-stop-daemon --stop --exec $command --name $SVCNAME
+	}
+
