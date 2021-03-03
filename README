@@ -4,13 +4,14 @@ geth-logrotate - logrotate file for geth daemon
 instalation:
 # make install
 
-make help to show all options
+to show all options use
+$ make help 
 
 this openrc script is designed to run as user and store files in ~/.local/share/ethereum"
 to start daemon for user FOO create symlink like this one:
 # ln -s /etc/init.d/geth /etc/init.d/geth.FOO
-now start it with: rs-service geth.FOO or /etc/init.d/geth.FOO
-or add to default runlevel via: rc-update add geth
+now start it with: rs-service geth.FOO start or /etc/init.d/geth.FOO start
+or add to default runlevel via: rc-update add geth.FOO defautl
 
 logs will be stored in /var/log/geth/geth.FOO.log
 pid will be in /run/geth.FOO.pid
